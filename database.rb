@@ -113,3 +113,14 @@ loop do
     database.deleting_people
   end
 end
+
+# Steps for completing the homework:
+# - Change my loops into enumerables.
+# - Creat a CSV file***
+# - Put collected information into the CSV
+# - Add a rule that doesn't let people recreate a person
+# - Change the search to allow a partial match against the person's name, an exact match of the Slack Account, an exact match of the Github Account
+# - Reformat display of Search results
+# - Rewrite the CSV when an employee is added or deleted
+# - Create a reports menu.
+# - include total count and salary for three individuals.
