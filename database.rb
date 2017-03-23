@@ -61,11 +61,11 @@ class Database
 
     if found_person
       puts "You searched for #{found_person.name}."
-      puts "their phone number is #{found.phone_number}."
-      puts "Their address is #{found.address}."
-      puts "They are the/a #{found.position}."
-      puts "They make #{found.salary}."
-      puts "They can be found on the internet at #{found.slack_account} and #{found.github_account}."
+      puts "their phone number is #{found_person.phone_number}."
+      puts "Their address is #{found_person.address}."
+      puts "They are the/a #{found_person.position}."
+      puts "They make #{found_person.salary}."
+      puts "They can be found on the internet at #{found_person.slack_account} and #{found_person.github_account}."
       puts "Now please try not to misuse that information"
     else
       puts "That person does not exist. Would you like to add them?"
@@ -73,20 +73,13 @@ class Database
   end
 
   def deleting_people
-    found = false
-    index = 0
     puts "Who would you like to delete?"
     delete = gets.chomp
+    delete_person = @personnel.delete_if {|person| person.name == delete}
 
-    @personnel.each do |person|
-      if person.name == delete
-        found = true
-        @personnel.slice!(index)
-        puts "Thank you for deleting!"
-      end
-      index += 1
-    end
-    if found == false
+    if delete_person
+      puts "Thank you for deleting!"
+    else
       puts "That person doesn't exist. Would you like to add them?"
     end
   end
