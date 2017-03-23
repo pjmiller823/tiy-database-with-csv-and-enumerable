@@ -1,3 +1,4 @@
+require 'csv'
 class People
   attr_reader "name", "phone_number", "address", "position", "salary", "slack_account", "github_account"
 
@@ -15,6 +16,17 @@ end
 class Database
   def initialize
     @personnel = []
+    CSV.foreach("employees.csv", headers: true) do |row|
+      name = row[name]
+      phone_number = row[phone_number]
+      address = row[address]
+      position = row[position]
+      salary = row[salary]
+      slack_account = row[slack_account]
+      github_account = row[github_account]
+
+      person = People.new(name, phone_number, address, position, salary, slack_account, github_account)
+      @personnel << person
   end
 
   def adding_people
@@ -108,8 +120,8 @@ loop do
 end
 
 # Steps for completing the homework:
-# - Change my loops into enumerables.
-# - Creat a CSV file***
+# - ***Change my loops into enumerables.***
+# - ***Creat a CSV file***
 # - Put collected information into the CSV
 # - Add a rule that doesn't let people recreate a person
 # - Change the search to allow a partial match against the person's name, an exact match of the Slack Account, an exact match of the Github Account
