@@ -55,18 +55,19 @@ class Database
   end
 
   def searching_people
-    found = false
     puts "Who would you like to search for?"
     search = gets.chomp
+    found_person = @personnel.find {|person| person.name == search}
 
-    @personnel.each do |person|
-      if person.name == search
-        puts "You searched for #{person.name}, their phone number is #{person.phone_number}. Their address is #{person.address}. They are the/a #{person.position}. They make #{person.salary}. They can be found on the internet at #{@slack_account} and #{@github_account}. Now please try not to misuse that information"
-        found = true
-        break
-      end
-    end
-    if found == false
+    if found_person
+      puts "You searched for #{found_person.name}."
+      puts "their phone number is #{found.phone_number}."
+      puts "Their address is #{found.address}."
+      puts "They are the/a #{found.position}."
+      puts "They make #{found.salary}."
+      puts "They can be found on the internet at #{found.slack_account} and #{found.github_account}."
+      puts "Now please try not to misuse that information"
+    else
       puts "That person does not exist. Would you like to add them?"
     end
   end
@@ -90,7 +91,6 @@ class Database
     end
   end
 end
-
 database = Database.new
 
 loop do
