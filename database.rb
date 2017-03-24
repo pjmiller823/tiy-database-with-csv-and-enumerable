@@ -104,11 +104,15 @@ class Database
       puts "That person doesn't exist. Would you like to add them?"
     end
   end
+
+  def employee_reports
+    @personnel
+  end
 end
 database = Database.new
-
+# if I make a main menu method what happens to database = Database.new?
 loop do
-  puts "Welcome to The Iron Yard employee database! Press 'A' to add a, 'S' to search for a person, and 'D' to delete someone. Have fun! (if you want to leave just press enter.)"
+  puts "Welcome to The Iron Yard employee database! Press 'A' to add a, 'S' to search for a person, and 'D' to delete someone. To see the employee report press 'E' Have fun! (if you want to leave just press enter.)"
   user_input = gets.chomp.upcase
 
   if user_input.empty?
@@ -134,7 +138,7 @@ end
 # - Put collected information into the CSV
 # - ***Add a rule that doesn't let people recreate a person***
 # - Change the search to allow a partial match against the person's name, an exact match of the Slack Account, an exact match of the Github Account
-# - Reformat display of Search results
+# - ***Reformat display of Search results***
 # - Rewrite the CSV when an employee is added or deleted
 # - Create a reports menu.
 # - include total count and salary for three individuals.
