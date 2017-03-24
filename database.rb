@@ -25,7 +25,7 @@ class Database
       slack_account = row["slack"]
       github_account = row["github"]
 
-      person = People.new(name, phone_number, address, position, salary, slack_account, github_account)
+      person = People.new(name, phone_number, address, position, salary.to_i, slack_account, github_account)
 
       @personnel << person
     end
@@ -63,7 +63,7 @@ class Database
 
         puts "Thank you for the addition!"
 
-        person = People.new(name, phone_number, address, position, salary, slack_account, github_account)
+        person = People.new(name, phone_number, address, position, salary.to_i, slack_account, github_account)
 
         @personnel << person
       end
@@ -73,11 +73,7 @@ class Database
   def searching_people
     puts "Who would you like to search for? You can search for their name, Slack name or Github account."
     search = gets.chomp
-    # a partial match against the person's name,	an exact match of the Slack Account, an exact match of the Github Account
-    # - partial of the name via grep? but a partial match is also a full match so it could replace the primary? includes?
-    # - exact match of accounts is == and fairly easy.
-    # - would have to be an addition of multiple || to found_person.
-    # - found_person = @personnel.find {|person| person.name == search || person.slack_account == search || person.github_account == search}
+
     found_person = @personnel.find {|person| person.name.include?(search) || person.slack_account == search || person.github_account == search}
 
     if found_person
@@ -108,11 +104,31 @@ class Database
   def employee_reports
     puts "#{@personnel}"
     puts "the total salary of the instructors is #{total_salary_instructor}"
+    puts "the total salary of the directors is #{total_salary_director}"
+    puts "the number of instructors is #{total_number_instructor}"
+    puts "the number of directors is #{total_number_director}"
+    puts "the number of students is #{total_number_student}"
   end
 
   # total salary of instructors and the director separately. (separate methods?)
   def total_salary_instructor
-    @personnel.select { |person| person.position.include?("instructor") }.map { |person| person.salary }.sum
+    @personnel.select { |person| person.position.include?("Instructor") }.map { |person| person.salary }.sum
+  end
+
+  def total_salary_director
+    @personnel.select { |person| person.position.include?("Director") }.map { |person| person.salary}.sum
+  end
+
+  def total_number_instructor
+    @personnel.select { |person| person.position.include?("Instructor") }.count
+  end
+
+  def total_number_director
+    @personnel.select { |person| person.position.include?("Director") }.count
+  end
+
+  def total_number_student
+    @personnel.select { |person| person.position.include?("Student") }.count
   end
 end
 database = Database.new
