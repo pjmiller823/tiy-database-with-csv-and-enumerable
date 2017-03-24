@@ -145,11 +145,10 @@ class Database
     CSV.open("employees.csv", "w") do |csv|
       csv << ["name", "phone_number", "address", "position", "salary", "slack_account", "github_account"]
       @personnel.each do |person|
-          csv << [person.name, person.phone_number, person.address, person.position, person.salary, person.slack_account, person.github_account]
+        csv << [person.name, person.phone_number, person.address, person.position, person.salary, person.slack_account, person.github_account]
       end
     end
   end
-
 end
 database = Database.new
 
