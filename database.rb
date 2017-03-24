@@ -98,6 +98,7 @@ class Database
 
     if delete_person
       puts "Thank you for deleting!"
+      writing_to_csv
     else
       puts "That person doesn't exist. Would you like to add them?"
     end
@@ -142,15 +143,16 @@ class Database
 
   def writing_to_csv
     CSV.open("employees.csv", "w") do |csv|
-      csv << ["name", "phone_number" "address" "position" "salary", "slack_account", "github_account"]
-        @personnel.each do |person|
+      csv << ["name", "phone_number", "address", "position", "salary", "slack_account", "github_account"]
+      @personnel.each do |person|
           csv << [person.name, person.phone_number, person.address, person.position, person.salary, person.slack_account, person.github_account]
-        end
+      end
     end
   end
+
 end
 database = Database.new
-# if I make a main menu method what happens to database = Database.new?
+
 loop do
   puts "Welcome to The Iron Yard employee database! Press 'A' to add a, 'S' to search for a person, and 'D' to delete someone. To see the employee report press 'E' Have fun! (if you want to leave just press enter.)"
   user_input = gets.chomp.upcase
@@ -175,14 +177,3 @@ loop do
     database.employee_reports
   end
 end
-
-# Steps for completing the homework:
-# - ***Change my loops into enumerables.***
-# - ***Creat a CSV file***
-# - Put collected information into the CSV
-# - ***Add a rule that doesn't let people recreate a person***
-# - Change the search to allow a partial match against the person's name, an exact match of the Slack Account, an exact match of the Github Account
-# - ***Reformat display of Search results***
-# - Rewrite the CSV when an employee is added or deleted
-# - Create a reports menu.
-# - include total count and salary for three individuals.
