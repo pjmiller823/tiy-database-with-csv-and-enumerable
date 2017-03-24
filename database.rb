@@ -102,7 +102,7 @@ class Database
   end
 
   def employee_reports
-    puts "#{@personnel}"
+    employee_list_display
     puts "the total salary of the instructors is #{total_salary_instructor}"
     puts "the total salary of the directors is #{total_salary_director}"
     puts "the number of instructors is #{total_number_instructor}"
@@ -110,7 +110,14 @@ class Database
     puts "the number of students is #{total_number_student}"
   end
 
-  # total salary of instructors and the director separately. (separate methods?)
+  def employee_list_display
+    sorted_employee_list = @personnel.sort_by{ |person| person.name }
+    puts "Here is a list of everyone we have working here"
+    sorted_employee_list.each do |person|
+      puts "name: #{person.name}, phone number: #{person.phone_number}, address: #{person.address}, position: #{person.position}, salary: #{person.salary}, slack account: #{person.slack_account}, github account: #{person.github_account}"
+    end
+  end
+
   def total_salary_instructor
     @personnel.select { |person| person.position.include?("Instructor") }.map { |person| person.salary }.sum
   end
