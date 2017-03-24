@@ -50,7 +50,7 @@ class Database
         address = gets.chomp
 
         puts "What is #{name}'s position in the company?"
-        position = gets.chomp.
+        position = gets.chomp
 
         puts "What is #{name}'s salary?"
         salary = gets.chomp.to_i
@@ -66,6 +66,8 @@ class Database
         person = People.new(name, phone_number, address, position, salary.to_i, slack_account, github_account)
 
         @personnel << person
+
+        writing_to_csv
       end
     end
   end
@@ -136,6 +138,15 @@ class Database
 
   def total_number_student
     @personnel.select { |person| person.position.include?("Student") }.count
+  end
+
+  def writing_to_csv
+    CSV.open("employees.csv", "w") do |csv|
+      csv << ["name", "phone_number" "address" "position" "salary", "slack_account", "github_account"]
+        @personnel.each do |person|
+          csv << [person.name, person.phone_number, person.address, person.position, person.salary, person.slack_account, person.github_account]
+        end
+    end
   end
 end
 database = Database.new
