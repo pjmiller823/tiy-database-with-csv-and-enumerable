@@ -71,16 +71,21 @@ class Database
   end
 
   def searching_people
-    puts "Who would you like to search for?"
+    puts "Who would you like to search for? You can search for their name, Slack name or Github account."
     search = gets.chomp
-    found_person = @personnel.find {|person| person.name == search}
+    # a partial match against the person's name,	an exact match of the Slack Account, an exact match of the Github Account
+    # - partial of the name via grep? but a partial match is also a full match so it could replace the primary?
+    # - exact match of accounts is == and fairly easy.
+    # - would have to be an addition of multiple || to found_person.
+    # - found_person = @personnel.find {|person| person.name == search || person.slack_account == search || person.github_account == search}
+    found_person = @personnel.find {|person| person.name == search || person.slack_account == search || person.github_account == search}
 
     if found_person
       puts "You searched for #{found_person.name}."
       puts "their phone number is #{found_person.phone_number}."
       puts "Their address is #{found_person.address}."
       puts "They are the/a #{found_person.position}."
-      puts "They make #{found_person.salary}."
+      puts "Their salary is #{found_person.salary}."
       puts "They can be found on the internet at (slack) #{found_person.slack_account} and github.com/#{found_person.github_account}."
       puts "Now please try not to misuse that information"
     else
@@ -127,7 +132,7 @@ end
 # - ***Change my loops into enumerables.***
 # - ***Creat a CSV file***
 # - Put collected information into the CSV
-# - Add a rule that doesn't let people recreate a person
+# - ***Add a rule that doesn't let people recreate a person***
 # - Change the search to allow a partial match against the person's name, an exact match of the Slack Account, an exact match of the Github Account
 # - Reformat display of Search results
 # - Rewrite the CSV when an employee is added or deleted
