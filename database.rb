@@ -50,10 +50,10 @@ class Database
         address = gets.chomp
 
         puts "What is #{name}'s position in the company?"
-        position = gets.chomp
+        position = gets.chomp.
 
         puts "What is #{name}'s salary?"
-        salary = gets.chomp
+        salary = gets.chomp.to_i
 
         puts "What is #{name}'s slack account?"
         slack_account = gets.chomp
@@ -74,11 +74,11 @@ class Database
     puts "Who would you like to search for? You can search for their name, Slack name or Github account."
     search = gets.chomp
     # a partial match against the person's name,	an exact match of the Slack Account, an exact match of the Github Account
-    # - partial of the name via grep? but a partial match is also a full match so it could replace the primary?
+    # - partial of the name via grep? but a partial match is also a full match so it could replace the primary? includes?
     # - exact match of accounts is == and fairly easy.
     # - would have to be an addition of multiple || to found_person.
     # - found_person = @personnel.find {|person| person.name == search || person.slack_account == search || person.github_account == search}
-    found_person = @personnel.find {|person| person.name == search || person.slack_account == search || person.github_account == search}
+    found_person = @personnel.find {|person| person.name.include?(search) || person.slack_account == search || person.github_account == search}
 
     if found_person
       puts "You searched for #{found_person.name}."
@@ -106,7 +106,13 @@ class Database
   end
 
   def employee_reports
-    @personnel
+    puts "#{@personnel}"
+    puts "the total salary of the instructors is #{total_salary_instructor}"
+  end
+
+  # total salary of instructors and the director separately. (separate methods?)
+  def total_salary_instructor
+    @personnel.select { |person| person.position.include?("instructor") }.map { |person| person.salary }.sum
   end
 end
 database = Database.new
@@ -129,6 +135,10 @@ loop do
 
   if user_input == "D"
     database.deleting_people
+  end
+
+  if user_input == "E"
+    database.employee_reports
   end
 end
 
