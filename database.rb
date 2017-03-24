@@ -17,16 +17,18 @@ class Database
   def initialize
     @personnel = []
     CSV.foreach("employees.csv", headers: true) do |row|
-      name = row[name]
-      phone_number = row[phone_number]
-      address = row[address]
-      position = row[position]
-      salary = row[salary]
-      slack_account = row[slack_account]
-      github_account = row[github_account]
+      name = row["name"]
+      phone_number = row["phone"]
+      address = row["address"]
+      position = row["position"]
+      salary = row["salary"]
+      slack_account = row["slack"]
+      github_account = row["github"]
 
       person = People.new(name, phone_number, address, position, salary, slack_account, github_account)
+
       @personnel << person
+    end
   end
 
   def adding_people
@@ -38,32 +40,34 @@ class Database
         break
       end
 
-      puts "What is #{name}'s phone number?"
-      phone_number = gets.chomp
+      if @personnel.find {|person| person.name == name}
+        puts "That person already exists!"
+      else
+        puts "What is #{name}'s phone number?"
+        phone_number = gets.chomp
 
-      puts "What is #{name}'s address?"
-      address = gets.chomp
+        puts "What is #{name}'s address?"
+        address = gets.chomp
 
-      puts "What is #{name}'s position in the company?"
-      position = gets.chomp
+        puts "What is #{name}'s position in the company?"
+        position = gets.chomp
 
-      puts "What is #{name}'s salary?"
-      salary = gets.chomp
+        puts "What is #{name}'s salary?"
+        salary = gets.chomp
 
-      puts "What is #{name}'s slack account?"
-      slack_account = gets.chomp
+        puts "What is #{name}'s slack account?"
+        slack_account = gets.chomp
 
-      puts "What is #{name}'s github account?"
-      github_account = gets.chomp
+        puts "What is #{name}'s github account?"
+        github_account = gets.chomp
 
-      puts "Thank you for the addition!"
+        puts "Thank you for the addition!"
 
-      person = People.new(name, phone_number, address, position, salary, slack_account, github_account)
+        person = People.new(name, phone_number, address, position, salary, slack_account, github_account)
 
-      @personnel << person
-
+        @personnel << person
+      end
     end
-
   end
 
   def searching_people
@@ -77,7 +81,7 @@ class Database
       puts "Their address is #{found_person.address}."
       puts "They are the/a #{found_person.position}."
       puts "They make #{found_person.salary}."
-      puts "They can be found on the internet at #{found_person.slack_account} and #{found_person.github_account}."
+      puts "They can be found on the internet at (slack) #{found_person.slack_account} and github.com/#{found_person.github_account}."
       puts "Now please try not to misuse that information"
     else
       puts "That person does not exist. Would you like to add them?"
