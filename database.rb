@@ -1,15 +1,15 @@
 require 'csv'
 class People
-  attr_reader "name", "phone_number", "address", "position", "salary", "slack_account", "github_account"
+  attr_reader "name", "phone", "address", "position", "salary", "slack", "github"
 
-  def initialize(name, phone_number, address, position, salary, slack_account, github_account)
+  def initialize(name, phone, address, position, salary, slack, github)
     @name = name
-    @phone_number = phone_number
+    @phone = phone
     @address = address
     @position = position
     @salary = salary
-    @slack_account = slack_account
-    @github_account = github_account
+    @slack = slack
+    @github = github
   end
 end
 
@@ -18,14 +18,14 @@ class Database
     @personnel = []
     CSV.foreach("employees.csv", headers: true) do |row|
       name = row["name"]
-      phone_number = row["phone"]
+      phone = row["phone"]
       address = row["address"]
       position = row["position"]
       salary = row["salary"]
-      slack_account = row["slack"]
-      github_account = row["github"]
+      slack = row["slack"]
+      github = row["github"]
 
-      person = People.new(name, phone_number, address, position, salary.to_i, slack_account, github_account)
+      person = People.new(name, phone, address, position, salary.to_i, slack, github)
 
       @personnel << person
     end
@@ -44,7 +44,7 @@ class Database
         puts "That person already exists!"
       else
         puts "What is #{name}'s phone number?"
-        phone_number = gets.chomp
+        phone = gets.chomp
 
         puts "What is #{name}'s address?"
         address = gets.chomp
@@ -56,14 +56,14 @@ class Database
         salary = gets.chomp.to_i
 
         puts "What is #{name}'s slack account?"
-        slack_account = gets.chomp
+        slack = gets.chomp
 
         puts "What is #{name}'s github account?"
-        github_account = gets.chomp
+        github = gets.chomp
 
         puts "Thank you for the addition!"
 
-        person = People.new(name, phone_number, address, position, salary.to_i, slack_account, github_account)
+        person = People.new(name, phone, address, position, salary.to_i, slack, github)
 
         @personnel << person
 
@@ -76,15 +76,15 @@ class Database
     puts "Who would you like to search for? You can search for their name, Slack name or Github account."
     search = gets.chomp
 
-    found_person = @personnel.find {|person| person.name.include?(search) || person.slack_account == search || person.github_account == search}
+    found_person = @personnel.find {|person| person.name.include?(search) || person.slack == search || person.github == search}
 
     if found_person
       puts "You searched for #{found_person.name}."
-      puts "their phone number is #{found_person.phone_number}."
+      puts "their phone number is #{found_person.phone}."
       puts "Their address is #{found_person.address}."
       puts "They are the/a #{found_person.position}."
       puts "Their salary is #{found_person.salary}."
-      puts "They can be found on the internet at (slack) #{found_person.slack_account} and github.com/#{found_person.github_account}."
+      puts "They can be found on the internet at (slack) #{found_person.slack} and github.com/#{found_person.github}."
       puts "Now please try not to misuse that information"
     else
       puts "That person does not exist. Would you like to add them?"
@@ -117,7 +117,7 @@ class Database
     sorted_employee_list = @personnel.sort_by{ |person| person.name }
     puts "Here is a list of everyone we have working here"
     sorted_employee_list.each do |person|
-      puts "name: #{person.name}, phone number: #{person.phone_number}, address: #{person.address}, position: #{person.position}, salary: #{person.salary}, slack account: #{person.slack_account}, github account: #{person.github_account}"
+      puts "name: #{person.name}, phone number: #{person.phone}, address: #{person.address}, position: #{person.position}, salary: #{person.salary}, slack account: #{person.slack}, github account: #{person.github}"
     end
   end
 
@@ -143,9 +143,9 @@ class Database
 
   def writing_to_csv
     CSV.open("employees.csv", "w") do |csv|
-      csv << ["name", "phone_number", "address", "position", "salary", "slack_account", "github_account"]
+      csv << ["name", "phone", "address", "position", "salary", "slack", "github"]
       @personnel.each do |person|
-        csv << [person.name, person.phone_number, person.address, person.position, person.salary, person.slack_account, person.github_account]
+        csv << [person.name, person.phone, person.address, person.position, person.salary, person.slack, person.github]
       end
     end
   end
@@ -153,7 +153,7 @@ end
 database = Database.new
 
 loop do
-  puts "Welcome to The Iron Yard employee database! Press 'A' to add a, 'S' to search for a person, and 'D' to delete someone. To see the employee report press 'E' Have fun! (if you want to leave just press enter.)"
+  puts "Welcome to The Iron Yard employee database! Press 'A' to add a person, 'S' to search for a person, and 'D' to delete someone. To see the employee report press 'E' Have fun! (if you want to leave just press enter.)"
   user_input = gets.chomp.upcase
 
   if user_input.empty?
