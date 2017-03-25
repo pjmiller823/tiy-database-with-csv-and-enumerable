@@ -114,10 +114,10 @@ class Database
   end
 
   def employee_list_display
-    sorted_employee_list = @personnel.sort_by{ |person| person.name }
+    sorted_employee_list = @personnel.sort_by{ |person| person.name}
     puts "Here is a list of everyone we have working here"
     sorted_employee_list.each do |person|
-      puts "name: #{person.name}, phone number: #{person.phone}, address: #{person.address}, position: #{person.position}, salary: #{person.salary}, slack account: #{person.slack}, github account: #{person.github}"
+      puts "name: #{person.name.ljust(13)} phone number: #{person.phone.ljust(13)} address: #{person.address.ljust(25)} position: #{person.position.ljust(18)} salary: #{person.salary.to_s.ljust(13)} slack account: #{person.slack.ljust(20)} github account: #{person.github.ljust(20)}"
     end
   end
 
