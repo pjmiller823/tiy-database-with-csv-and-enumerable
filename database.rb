@@ -95,13 +95,12 @@ class Database
   def deleting_people
     puts "Who would you like to delete?"
     delete = gets.chomp
-    delete_person = @personnel.find {|person| person.name == delete}
 
-    if delete_person
+    if @personnel.any? {|person| person.name == delete}
+      @personnel.delete_if { |person| person.name == delete}
       puts "Thank you for deleting!"
       writing_to_csv
-    end
-    if delete_person = false
+    else
       puts "That person doesn't exist. Would you like to add them?"
     end
   end
