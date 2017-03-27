@@ -106,13 +106,21 @@ class Database
   end
 
   def employee_reports
-    employee_list_display
-    employees_by_position = @personnel.group_by {|person| person.position}
+    puts "Would you like to see the report in this screen (S), on an html (H) or a text file (T)?"
+    report_preference = gets.chomp.upcase
+    if report_preference == "S"
+      employee_list_display
+      employees_by_position = @personnel.group_by {|person| person.position}
 
-    employees_by_position.each do |position, people|
-      total_salary = people.map {|person| person.salary}.sum
-      puts "the total salary of the #{position}s is #{total_salary}"
-      puts "the number of #{position}s is #{people.count}"
+      employees_by_position.each do |position, people|
+        total_salary = people.map {|person| person.salary}.sum
+        puts "the total salary of the #{position}s is #{total_salary}"
+        puts "the number of #{position}s is #{people.count}"
+      end
+    end
+    if report_preference == "H"
+      puts "Check report at _______"
+      employee_report_to_html
     end
   end
 
@@ -122,6 +130,13 @@ class Database
     sorted_employee_list.each do |person|
       puts "name: #{person.name.ljust(13)} phone number: #{person.phone.ljust(13)} address: #{person.address.ljust(25)} position: #{person.position.ljust(18)} salary: #{person.salary.to_s.ljust(13)} slack account: #{person.slack.ljust(20)} github account: #{person.github.ljust(20)}"
     end
+  end
+
+  def employee_report_to_html
+    template = ERB.new(File.read("report.html.erb"))
+    html = template.result(binding)
+
+    File.write("report.html", html)
   end
 
   def writing_to_csv
