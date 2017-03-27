@@ -1,4 +1,5 @@
 require 'csv'
+require 'erb'
 class People
   attr_reader "name", "phone", "address", "position", "salary", "slack", "github"
 
@@ -94,23 +95,26 @@ class Database
   def deleting_people
     puts "Who would you like to delete?"
     delete = gets.chomp
-    delete_person = @personnel.delete_if {|person| person.name == delete}
+    delete_person = @personnel.find {|person| person.name == delete}
 
     if delete_person
       puts "Thank you for deleting!"
       writing_to_csv
-    else
+    end
+    if delete_person = false
       puts "That person doesn't exist. Would you like to add them?"
     end
   end
 
   def employee_reports
     employee_list_display
-    puts "the total salary of the instructors is #{total_salary_instructor}"
-    puts "the total salary of the directors is #{total_salary_director}"
-    puts "the number of instructors is #{total_number_instructor}"
-    puts "the number of directors is #{total_number_director}"
-    puts "the number of students is #{total_number_student}"
+    employees_by_position = @personnel.group_by {|person| person.position}
+
+    employees_by_position.each do |position, people|
+      total_salary = people.map {|person| person.salary}.sum
+      puts "the total salary of the #{position}s is #{total_salary}"
+      puts "the number of #{position}s is #{people.count}"
+    end
   end
 
   def employee_list_display
@@ -119,26 +123,6 @@ class Database
     sorted_employee_list.each do |person|
       puts "name: #{person.name.ljust(13)} phone number: #{person.phone.ljust(13)} address: #{person.address.ljust(25)} position: #{person.position.ljust(18)} salary: #{person.salary.to_s.ljust(13)} slack account: #{person.slack.ljust(20)} github account: #{person.github.ljust(20)}"
     end
-  end
-
-  def total_salary_instructor
-    @personnel.select { |person| person.position.include?("Instructor") }.map { |person| person.salary }.sum
-  end
-
-  def total_salary_director
-    @personnel.select { |person| person.position.include?("Director") }.map { |person| person.salary}.sum
-  end
-
-  def total_number_instructor
-    @personnel.select { |person| person.position.include?("Instructor") }.count
-  end
-
-  def total_number_director
-    @personnel.select { |person| person.position.include?("Director") }.count
-  end
-
-  def total_number_student
-    @personnel.select { |person| person.position.include?("Student") }.count
   end
 
   def writing_to_csv
