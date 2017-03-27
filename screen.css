@@ -1,0 +1,35 @@
+html {
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font: 16px / 1 sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+h1 {
+  background-color: #8f939b  
+  text-align: center;
+  width: calc(100% - 20px)
+}
+
+table {
+ border: 1 px black;
+ display: flex;
+ margin: 20px;
+}
+
+
+th {
+  border: 1 px black;
+  background-color: #8f939b
+}
+
+td {
+  border: 1 px black;
+  background-color: #bcbfc4
+  color: inherit;
+}
