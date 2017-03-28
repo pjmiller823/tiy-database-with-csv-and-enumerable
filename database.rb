@@ -119,11 +119,11 @@ class Database
       end
     end
     if report_preference == "H"
-      puts "Check report at _______"
+      puts "Check report at report.html"
       employee_report_to_html
     end
     if report_preference == "T"
-      puts "check ________ for your text file"
+      puts "check out your text file report.txt"
       employee_report_to_txt
     end
   end
