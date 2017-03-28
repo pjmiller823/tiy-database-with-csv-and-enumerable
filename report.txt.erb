@@ -1,0 +1,9 @@
+<% @personnel.sort_by{ |person| person.name}.each do |person| %>
+  <%= person.name %>
+  <%= person.address %>
+  <%= person.phone %>
+  <%= person.position %>
+  <%= person.salary %>
+  <%= person.slack %>
+  <%= person.github %>
+<% end %>

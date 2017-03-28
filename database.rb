@@ -122,6 +122,10 @@ class Database
       puts "Check report at _______"
       employee_report_to_html
     end
+    if report_preference == "T"
+      puts "check ________ for your text file"
+      employee_report_to_txt
+    end
   end
 
   def employee_list_display
@@ -137,6 +141,13 @@ class Database
     html = template.result(binding)
 
     File.write("report.html", html)
+  end
+
+  def employee_report_to_txt
+    template = ERB.new(File.read("report.txt.erb"))
+    html = template.result(binding)
+
+    File.write("report.txt", html)
   end
 
   def writing_to_csv

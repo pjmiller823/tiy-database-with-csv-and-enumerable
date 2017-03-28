@@ -1,0 +1,41 @@
+
+  Evelyn
+  1 main
+  444-4444
+  Baby
+  0
+  coolbaby
+  coolbaby
+
+  Gavin
+  1 Main Street
+  555-1212
+  Instructor
+  1000000
+  gstark
+  gstark
+
+  Jason
+  500 Elm Street
+  555-4242
+  Instructor
+  2000000
+  ambethia
+  ambethia
+
+  Patrick
+  1 main
+  333-3333
+  Student
+  0
+  pjmiller823
+  pjmiller823
+
+  Toni
+  200 Pine Street
+  555-4444
+  Campus Director
+  3000000
+  amazing_toni
+  amazing_toni
+
